@@ -1,4 +1,4 @@
-import Conexao from "../config/conexao.js";
+import UsuarioService from "../services/UsuarioService.js";
 
 
 // Funções de CRUD
@@ -34,72 +34,35 @@ import Conexao from "../config/conexao.js";
 //     return null;
 // }
 
-const conexao = new Conexao();
+
+
+
 
 class UsuariosController {
-
     async findAll(req, res) {
-        try {
-            const data = await conexao.qyuery("SELECT * FROM usuarios");
-            return res.json(data);
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
-        }
+        const users = await UsuarioService.findAll();
+        return res.json(users);
     }
 
-    async findOne(req, res) {
-        const id = req.params.id;
-        try {
-            const data = await conexao.qyuery("SELECT * FROM usuarios WHERE id = $1", [id]);
-                if(data.length === 0){
-                    return res.status(404).json({ message: "Usuário não encontrado" });
-                }
-                return res.json(data);
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
-        }
+    async findById(req, res) {
+        const user = await UsuarioService.findById(req.params.id);
+        return res.json(user);
     }
 
     async create(req, res) {
-        const body = req.body;
-        try {
-            const data = await conexao.qyuery(
-                "INSERT INTO usuarios (nome, email, senha) VALUES ($1, $2, $3) RETURNING *", [body.nome, body.email, body.senha]
-                );
-                return res.status(201).json(data);
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
-        }
+        const user = await UsuarioService.create(req.body);
+        return res.status(201).json(user);
     }
 
     async update(req, res) {
-        const body = req.body;
-        const id = req.params.id;
-        try {
-            const data = await conexao.qyuery(
-                "UPDATE usuarios SET nome = $1, email = $2, senha = $3 WHERE id = $4 RETURNING *", [body.nome, body.email, body.senha, id]
-            );
-            if(data.length === 0){
-                return res.status(404).json({ message: "Usuário não encontrado" });
-            }
-            return res.json(data);
-        } catch (error) {
-            return res.status(500).json({ error: error.message });
-        }
+        const user = await UsuarioService.update(req.params.id, req.body);
+        return res.json(user);
     }
 
     async delete(req, res) {
-        const id = req.params.id;
-       try {
-        const data = await conexao.qyuery("DELETE FROM usuarios WHERE id = $1 RETURNING *", [id]);
-        if(data.length === 0){
-            return res.status(404).json({ message: "Usuário não encontrado" });
-        }
-            return res.json(data);
-       } catch (error) {
-            return res.status(500).json({ error: error.message });
-       }
+        await UsuarioService.delete(req.params.id);
+        return res.status(204).send();
     }
 }
 
-export default UsuariosController;
+export default new UsuariosController();

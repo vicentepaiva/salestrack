@@ -1,67 +1,70 @@
-let vendedores = [];
+import Conexao from "../config/conexao.js";
 
-function findAll() {
-    return vendedores;
-}
-
-function findOne(id) {
-    return vendedores.find(v => v.id === parseInt(id));
-}
-
-function create(vendedor) {
-    vendedor.id = vendedores.length + 1;
-    vendedores.push(vendedor);
-    return vendedor;
-}
-
-function update(vendedor, id) {
-    const index = vendedores.findIndex(v => v.id === parseInt(id));
-    if (index !== -1) {
-        vendedores[index] = { ...vendedores[index], ...vendedor };
-        return vendedores[index];
-    }
-    return null;
-}
-
-function deleteById(id) {
-    const index = vendedores.findIndex(v => v.id === parseInt(id));
-    if (index !== -1) {
-        const vendedor = vendedores.splice(index, 1);
-        return vendedor[0];
-    }
-    return null;
-}
+const conexao = new Conexao();
 
 class VendedoresController {
 
-    findAll(req, res) {
-        const data = findAll();
-        return res.json(data);
+    async findAll(req, res) {
+        try {
+            const data = await conexao.query("SELECT * FROM vendedores");
+            return res.json(data);
+        } catch (error) {
+            return res.status(500).json({ error: error.message})
+        }
     }
 
-    findOne(req, res) {
+    async findOne(req, res) {
         const id = req.params.id;
-        const data = findOne(id);
-        return res.json(data);
+        try {
+            const data = await conexao.query("SELECT * FROM vendedores WHERE id = $1", [id]);
+            if(data.length === 0){
+                return res.status(404).json({ message: "Vendedor não encontrado" });
+            }
+            return res.json(data);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
     }
 
-    create(req, res) {
+    async create(req, res) {
         const body = req.body;
-        const data = create(body);
-        return res.json(data);
+        try {
+            const data = await conexao.query(
+                "INSERT INTO vendedores (nome, email, telefone) VALUES ($1, $2, $3) RETURNING *", [body.nome, body.email, body.telefone]
+                );
+            return res.json(data);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
     }
 
-    update(req, res) {
+    async update(req, res) {
         const body = req.body;
         const id = req.params.id;
-        const data = update(body, id);
-        return res.json(data);
+        try {
+            const data = await conexao.query(
+                " UPDATE vendedores SET nome = $1, email = $2, telefone = $3 WHERE id = $4 RETURNING *", [body.nome, body.email, body.telefone, id]
+            );
+            if(data.length === 0){
+                return res.status(404).json({ message: "Vendedor não encontrado" });
+            }
+            return res.json(data);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
     }
 
-    delete(req, res) {
+    async delete(req, res) {
         const id = req.params.id;
-        const data = deleteById(id);
-        return res.json(data);
+        try {
+            const data = await conexao.query("DELETE FROM vendedores WHERE id = $1", [id]);
+            if(data.rowCount === 0){
+                return res.status(404).json({ message: "Vendedor não encontrado" });
+            }
+            return res.status(201).json({ message: "Vendedor excluído com sucesso" });
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
     }
 }
 

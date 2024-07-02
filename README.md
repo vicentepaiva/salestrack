@@ -1,12 +1,10 @@
 # SALESTRACK
 
-Projeto pessoal que está sendo realizado em conjunto com colegas de curso na #iwtraining no qual iremos criar um controlador de vendas e comissões para profissionais da área de vendas.
-Com esse produto o profissional poderá ter acesso aos dados mensais e anuais de suas vendas e comissões ao longo do período consultado.
-
+Personal project being developed together with classmates at #iwtraining where we will create a sales and commission tracker for sales professionals. With this product, professionals will be able to access monthly and yearly data of their sales and commissions over the queried period
 </br>
 
 
-# FERRAMENTAS
+# TOOLS
 
 . Nodejs </br>
 . express </br>
@@ -16,15 +14,15 @@ Com esse produto o profissional poderá ter acesso aos dados mensais e anuais de
 . Postegres </br>
 
 
-# INCIALIZAR O PROJETO
+# START THE PROJECT
 
-### Clone o projeto
+### Clone the project
 `git@github.com:vicentepaiva/salestrack`
 
-### baixe as dependências
+### download dependences
 `npm install`
 
-### inicialize a aplicação
+### start the project
 `npm start`
 
 

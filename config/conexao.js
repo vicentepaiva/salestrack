@@ -3,10 +3,10 @@ import { Client } from 'pg';
 class Conexao {
   constructor() {
     this.connectionConfig = {
-        host: 'bd-opencomtgecnologia.com.br',
-        user: 'opencomtgecnologia',
+        host: 'localhost',
+        user: 'admin',
         password: 'bcf7e7d1',
-        database: 'opencomtgecnologia_bd',
+        database: 'postgres',
         port: 5432,
   };
 }

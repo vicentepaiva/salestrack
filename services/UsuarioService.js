@@ -1,24 +1,32 @@
-import UsuariosModel from "../models/UsuariosModel.js";
+import { getRepository } from 'typeorm';
+import UsuariosModel from '../models/UsuariosModel.js';
 
 class UsuarioService {
     async findAll() {
-        return await UsuariosModel.findAll();
+        const userRepository = getRepository(UsuariosModel);
+        return await userRepository.find();
     }
 
-    async fundById(id) {
-        return await UsuariosModel.findById(id);
+    async findOne(id) {
+        const userRepository = getRepository(UsuariosModel);
+        return await userRepository.findOne(id);
     }
 
-    async create(data) {
-        return await UsuariosModel.create(data);
+    async create(userData) {
+        const userRepository = getRepository(UsuariosModel);
+        const newUser = userRepository.create(userData);
+        return await userRepository.save(newUser);
     }
 
-    async update(data, id) {
-        return await UsuariosModel.update(data, id);
+    async update(id, userData) {
+        const userRepository = getRepository(UsuariosModel);
+        await userRepository.update(id, userData);
+        return await userRepository.findOne(id);
     }
 
     async delete(id) {
-        return await UsuariosModel.delete(id);
+        const userRepository = getRepository(UsuariosModel);
+        await userRepository.delete(id);
     }
 }
 

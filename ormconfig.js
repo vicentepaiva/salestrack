@@ -2,7 +2,7 @@ const ormconfig = {
     type: "postgres",
     host: "localhost",
     port: 5432,
-    username: "admin",
+    username: "postgres",
     password: "password",
     database: "postgres",
     synchronize: true, // Não usar em produção

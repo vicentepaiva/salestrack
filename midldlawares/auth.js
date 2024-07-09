@@ -14,7 +14,8 @@ class auth {
             const user = {
                 id: dados.id,
                 nome: dados.nome,
-                email: dados.email
+                login: dados.login,
+                senha: dados.senha
             }
             const token = jwt.sign(user, process.env.APP_KEY);
             const data = {

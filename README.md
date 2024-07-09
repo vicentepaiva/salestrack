@@ -9,6 +9,7 @@ Personal project being developed together with classmates at #iwtraining where w
 . Nodejs </br>
 . express </br>
 . cors </br>
+. typeOrm </br>
 . jwt </br>
 . bycript </br>
 . Postegres </br>

@@ -14,14 +14,8 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.use('/public', PublicRoutes);
-app.use('/private', PrivateRoutes);
-app.use('/users', UsuariosRoutes);
-app.use('/sellers', VendedoresRoutes);
-
-app.use((req, res) => {
-    res.status(404).json({ error: 'Not found' });
-});
+app.use(PublicRoutes);
+app.use('/api', PrivateRoutes);
 
 const startServer = async () => {
     try {

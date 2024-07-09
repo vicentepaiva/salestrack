@@ -4,7 +4,7 @@ import 'dotenv/config.js';
 
 
 
-class auth {
+class Auth {
     async login(req, res) {
         const usuarioModel = new UsuariosModel();
         const { email, senha } = req.body;
@@ -32,4 +32,4 @@ class auth {
 
 }
 
-export default auth;
+export default Auth;

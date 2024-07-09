@@ -1,10 +1,12 @@
 import express from 'express';
+import Auth from '../midldlawares/Auth.js';
 
-const PublicRoutes = express.Router();
 
-PublicRoutes.use((req, res, next) => {
-    console.log('Public route hit');
-    next();
-});
+const publicRoutes = express.Router();
 
-export default PublicRoutes;
+const auth = new Auth();
+publicRoutes.post('/login', auth.login);
+
+
+
+export default publicRoutes;

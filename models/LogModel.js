@@ -1,15 +1,23 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { EntitySchema } from 'typeorm';
 
-@Entity()
-class LogModel {
-    @PrimaryGeneratedColumn()
-    id;
-
-    @Column()
-    mensagem;
-
-    @Column()
-    tipo;
-}
+const LogModel = new EntitySchema({
+    name: "Log",
+    tableName: "logs",
+    columns: {
+        id: {
+            type: Number,
+            primary: true,
+            generated: true
+        },
+        mensagem: {
+            type: String,
+            length: 255
+        },
+        tipo: {
+            type: String,
+            length: 50
+        }
+    }
+});
 
 export default LogModel;

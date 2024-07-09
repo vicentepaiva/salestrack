@@ -1,5 +1,6 @@
-import express from 'express'; 
+import express from 'express';
 import cors from 'cors';
+import connectDatabase from './config/database.js';
 import PublicRoutes from './routes/PublicRoutes.js';
 import PrivateRoutes from './routes/PrivateRoutes.js';
 import UsuariosRoutes from './routes/UsuariosRoutes.js';
@@ -22,6 +23,15 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Not found' });
 });
 
-app.listen(3000, () => {
-    console.log('Server is listening on port 3000');
-});
+const startServer = async () => {
+    try {
+        await connectDatabase();
+        app.listen(3000, () => {
+            console.log('Server is listening on port 3000');
+        });
+    } catch (error) {
+        console.error('Failed to start server:', error);
+    }
+}
+
+startServer();

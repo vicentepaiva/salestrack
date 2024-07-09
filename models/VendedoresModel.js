@@ -1,16 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { EntitySchema } from 'typeorm';
 
-@Entity()
-class VendedoresModel {
-    @PrimaryGeneratedColumn()
-    id;
-
-    @Column()
-    nome;
-
-    @Column()
-    email;
-}
+const VendedoresModel = new EntitySchema({
+    name: "Vendedor",
+    tableName: "vendedores",
+    columns: {
+        id: {
+            type: Number,
+            primary: true,
+            generated: true
+        },
+        nome: {
+            type: String,
+            length: 100
+        },
+        email: {
+            type: String,
+            length: 100
+        }
+    }
+});
 
 export default VendedoresModel;
 

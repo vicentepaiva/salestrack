@@ -1,11 +1,12 @@
-import { Client } from 'pg';
+import pkg from 'pg';
+const { Client } = pkg;
 
 class Conexao {
   constructor() {
     this.connectionConfig = {
       host: 'localhost',
       user: 'admin',
-      password: 'bcf7e7d1',
+      password: '',
       database: 'postgres',
       port: 5432,
     };

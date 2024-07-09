@@ -1,22 +1,34 @@
+import UsuariosModel from '../models/UsuariosModel.js';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config.js';
 
 
-function authMiddleware(req, res, next) {
- 
-    const token = req.headers.authorization;
 
-    if (!token) {
-        return res.status(401).json({ error: 'Token não fornecido' });
+class auth {
+    async login(req, res) {
+        const usuarioModel = new UsuariosModel();
+        const { email, senha } = req.body;
+        const dados = await usuarioModel.login(email, senha);
+
+        if(dados) {
+            const user = {
+                id: dados.id,
+                nome: dados.nome,
+                email: dados.email
+            }
+            const token = jwt.sign(user, process.env.APP_KEY);
+            const data = {
+                msg: 'Usuário logado com sucesso',
+                token: token
+            }
+            return res.json(data);
+        }
+
+        return res.status(403).json({
+            msg: 'Email ou senha inválidos'
+        });
     }
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded.user;      
-        next();
-    } catch (error) {
-        console.error('Erro na autenticação:', error);
-        return res.status(401).json({ error: 'Token inválido' });
-    }
 }
 
-export default authMiddleware;
+export default auth;

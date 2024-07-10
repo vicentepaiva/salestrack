@@ -4,11 +4,11 @@ import UsuariosController from '../controllers/UsuariosController.js';
 
 const router = express.Router();
 
-router.get('/usuarios', Auth, UsuariosController.findAll);
-router.get('/usuarios/:id', Auth, UsuariosController.findOne);
-router.post('/usuarios', Auth, UsuariosController.create);
-router.put('/usuarios/:id', Auth, UsuariosController.update);
-router.delete('/usuarios/:id', Auth, UsuariosController.delete);
+router.get('api/usuarios', Auth, UsuariosController.findAll);
+router.get('api/usuarios/:id', Auth, UsuariosController.findOne);
+router.post('api/usuarios', Auth, UsuariosController.create);
+router.put('api/usuarios/:id', Auth, UsuariosController.update);
+router.delete('api/usuarios/:id', Auth, UsuariosController.delete);
 
 export default router;
 

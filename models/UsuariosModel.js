@@ -1,7 +1,8 @@
-import { EntitySchema } from 'typeorm';
+import { EntitySchema, getRepository } from 'typeorm';
 
 
-const UsuariosModel = new EntitySchema({
+
+const UsuariosSchema = new EntitySchema({
     name: "Usuario",
     tableName: "usuarios",
     columns: {
@@ -24,6 +25,16 @@ const UsuariosModel = new EntitySchema({
         }
     }
 });
+
+class UsuariosModel {
+    constructor() {
+        this.repository = getRepository(UsuariosSchema);
+    }
+
+    async login(id, nome, login, senha) {
+        return await this.repository.findOne({where: {id, nome, login, senha}});
+    }
+}
 
 export default UsuariosModel;
 

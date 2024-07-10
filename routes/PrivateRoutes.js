@@ -8,6 +8,7 @@ const PrivateRoutes = express.Router();
 PrivateRoutes.use((req, res, next) => {
     const logged = false;
     const token = req.headers.token;
+    console.log(token)
     if(token) {
         try {
             const check = jwt.verify(token, process.env.APP_KEY);

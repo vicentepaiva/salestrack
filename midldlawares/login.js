@@ -6,10 +6,10 @@ const router = express.Router();
 const usuariosModel = new UsuariosModel();
 
 router.post ('/', async (req,res) => {
-    const { login, senha } = req.body;
+    const { id, nome, login, senha } = req.body;
 
    try {
-    const user = await usuariosModel.login(login, senha);
+    const user = await usuariosModel.login( id, nome, login, senha);
 
     if(!user) {
         return res.status(404).json({ message: "Usuário não encontrado" });

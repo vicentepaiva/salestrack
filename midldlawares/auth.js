@@ -7,8 +7,8 @@ import 'dotenv/config.js';
 class Auth {
     async login(req, res) {
         const usuarioModel = new UsuariosModel();
-        const { email, senha } = req.body;
-        const dados = await usuarioModel.login(email, senha);
+        const { id, nome, login, senha } = req.body;
+        const dados = await usuarioModel.login(id, nome, login, senha );
 
         if(dados) {
             const user = {

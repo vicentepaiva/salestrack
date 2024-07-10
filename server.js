@@ -3,8 +3,6 @@ import cors from 'cors';
 import connectDatabase from './config/database.js';
 import PublicRoutes from './routes/PublicRoutes.js';
 import PrivateRoutes from './routes/PrivateRoutes.js';
-import UsuariosRoutes from './routes/UsuariosRoutes.js';
-import VendedoresRoutes from './routes/VendedoresRoutes.js';
 
 const app = express();
 app.use(express.json());

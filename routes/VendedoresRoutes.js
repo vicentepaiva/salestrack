@@ -1,13 +1,13 @@
 import  express  from "express";
-import VendedoresController from '../controllers/VendedoresController.js';
+import VendedoresController from '../controllers/vendedoresController.js';
 
-const VendedoresRoutes = express.Router();
+const vendedoresRoutes = express.Router();
 
 const vendedoresController = new VendedoresController();
-VendedoresRoutes.get('/vendedores', vendedoresController.findAll);
-VendedoresRoutes.get('/vendedores/:id', vendedoresController.findOne);
-VendedoresRoutes.post('/vendedores', vendedoresController.create);
-VendedoresRoutes.put('/vendedores/:id', vendedoresController.update);
-VendedoresRoutes.delete('/vendedores/:id', vendedoresController.delete);
+vendedoresRoutes.get('/vendedores', vendedoresController.findAll);
+vendedoresRoutes.get('/vendedores/:id', vendedoresController.findOne);
+vendedoresRoutes.post('/vendedores', vendedoresController.create);
+vendedoresRoutes.put('/vendedores/:id', vendedoresController.update);
+vendedoresRoutes.delete('/vendedores/:id', vendedoresController.delete);
 
-export default VendedoresRoutes;
+export default vendedoresRoutes;

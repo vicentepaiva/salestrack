@@ -31,7 +31,10 @@ class UsuariosController {
         const userData = req.body;
         try {
             const newUsuario = await usuarioService.create(userData);
-            return res.status(201).json(newUsuario);
+            return res.status(201).json({
+                message: 'Usuário criado com sucesso',
+                id: newUsuario.id
+            });
         } catch (error) {
             console.error('Erro ao criar usuário:', error);
             return res.status(500).json({ error: 'Erro interno do servidor' });
@@ -46,7 +49,10 @@ class UsuariosController {
             if (!updatedUsuario) {
                 return res.status(404).json({ error: 'Usuário não encontrado' });
             }
-            return res.json(updatedUsuario);
+            return res.json({
+                message: 'Usuário atualizado com sucesso',
+                usuario: updatedUsuario.id
+            });
         } catch (error) {
             console.error('Erro ao atualizar usuário:', error);
             return res.status(500).json({ error: 'Erro interno do servidor' });

@@ -1,14 +1,15 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config.js';
-import UsuariosRoutes from './UsuariosRoutes.js';
+import usuariosRoutes from './UsuariosRoutes.js';
+import vendedoresRoutes from './VendedoresRoutes.js';
 
 const PrivateRoutes = express.Router();
 
 PrivateRoutes.use((req, res, next) => {
+
     const logged = false;
     const token = req.headers.token;
-    console.log(token)
     if(token) {
         try {
             const check = jwt.verify(token, process.env.APP_KEY);
@@ -27,6 +28,7 @@ PrivateRoutes.use((req, res, next) => {
     }
     next();
 });
-PrivateRoutes.use(UsuariosRoutes);
+PrivateRoutes.use(usuariosRoutes);
+PrivateRoutes.use(vendedoresRoutes);
 
 export default PrivateRoutes;

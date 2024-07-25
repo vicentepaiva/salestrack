@@ -5,8 +5,8 @@ class Conexao {
   constructor() {
     this.connectionConfig = {
       host: 'localhost',
-      user: 'postgres',
-      password: '',
+      user: 'admin',
+      password: 'postgres',
       database: 'postgres',
       port: 5432,
     };

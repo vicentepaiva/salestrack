@@ -1,14 +1,16 @@
-import { createConnection } from "typeorm";
-import ormconfig from "../ormconfig.js";
+import { DataSource } from 'typeorm';
+import ormconfig from '../ormconfig.js'; // Corrija o caminho se necessário
 
-const connectDatabase = async () => {
-    try {
-        await createConnection(ormconfig);
-        console.log("Conectado ao banco de dados com sucesso");
-    } catch (error) {
-        console.log("Erro ao conectar ao banco de dados: ", error);
-        throw error;
-    }
-}
+const AppDataSource = new DataSource(ormconfig);
 
-export default connectDatabase;
+AppDataSource.initialize()
+    .then(() => {
+        console.log('Data Source has been initialized!');
+    })
+    .catch((err) => {
+        console.error('Error during Data Source initialization', err);
+    });
+
+export default AppDataSource;
+
+

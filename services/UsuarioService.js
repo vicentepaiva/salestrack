@@ -1,32 +1,35 @@
-import { getRepository } from 'typeorm';
-import UsuariosModel from '../models/UsuariosModel.js';
+import AppDataSource from '../config/database.js';
+import UsuariosSchema from '../models/UsuariosModel.js'; // Certifique-se de que o nome está correto
 
 class UsuarioService {
+    constructor() {
+        this.repository = AppDataSource.getRepository(UsuariosSchema);
+    }
+
     async findAll() {
-        const userRepository = getRepository(UsuariosModel);
-        return await userRepository.find();
+        return await this.repository.find();
     }
 
     async findOne(id) {
-        const userRepository = getRepository(UsuariosModel);
-        return await userRepository.findOne(id);
+        return await this.repository.findOne({ where: { id } });
     }
 
     async create(userData) {
-        const userRepository = getRepository(UsuariosModel);
-        const newUser = userRepository.create(userData);
-        return await userRepository.save(newUser);
+        const newUser = this.repository.create(userData);
+        return await this.repository.save(newUser);
     }
 
     async update(id, userData) {
-        const userRepository = getRepository(UsuariosModel);
-        await userRepository.update(id, userData);
-        return await userRepository.findOne(id);
+        await this.repository.update(id, userData);
+        return await this.repository.findOne({ where: { id } });
     }
 
     async delete(id) {
-        const userRepository = getRepository(UsuariosModel);
-        await userRepository.delete(id);
+        await this.repository.delete(id);
+    }
+
+    async Auth(email, senha) {
+        return await this.repository.findOne({ where: { email, senha } });
     }
 }
 
